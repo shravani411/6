@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void fw(int **graph, int n) {
+int i, j, k;
+for(k = 0; k < n; k++) {
+for (i = 0; i < n; i++) {
+for (j = 0; j < n; j++) {
+
+if (graph[i][k] < 100 && graph[k][j] < 100) {
+
+if (graph[i][j] > graph[i][k] + graph[k][j]) {
+
+graph[i][j] = graph[i][k] + graph[k][j];
+}}}}}}
+
+int main(void) {
+int n, i, j;
+    
+printf("Enter the number of vertices: ");
+if (scanf("%d", &n) != 1 || n <= 0) {
+printf("Invalid number of vertices.\n");
+return 1;
+    }
+int **graph = (int **)malloc((size_t)n * sizeof(int *));
+for (i = 0; i < n; i++) {
+graph[i] = (int *)malloc((size_t)n * sizeof(int));
+}
+
+for (i = 0; i < n; i++) {
+for (j = 0; j < n; j++) {
+if (i == j) 
+graph[i][j] = 0;
+
+else 
+graph[i][j] = 100; 
+}}
+
+printf("Enter the matrix values :\n");
+for (i = 0; i < n; i++) {
+for (j = 0; j < n; j++) {
+printf("[%d][%d]: ", i, j);
+scanf("%d", &graph[i][j]);
+
+}}
+
+fw(graph, n);
+printf("\nThe shortest path matrix is:\n");
+for (i = 0; i < n; i++) {
+for (j = 0; j < n; j++) {
+printf("%d ", graph[i][j]);
+}
+printf("\n");
+    }
+for (i = 0; i < n; i++) {
+free(graph[i]);
+}
+free(graph);
+return 0;
+}
